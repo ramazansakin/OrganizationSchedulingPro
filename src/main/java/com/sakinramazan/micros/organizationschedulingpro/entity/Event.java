@@ -3,6 +3,8 @@ package com.sakinramazan.micros.organizationschedulingpro.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Getter
@@ -18,6 +20,8 @@ public class Event implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
+    @Size(max = 80)
     private String subject;
 
     private Integer duration;

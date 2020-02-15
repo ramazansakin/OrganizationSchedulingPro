@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.sakinramazan.micros.organizationschedulingpro.service.EventService.NETWORKING_EVENT;
+
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
 
@@ -84,11 +86,11 @@ public class OrganizationServiceImpl implements OrganizationService {
             List<Event> beforeMiddayEvents = scheduleBlockOfDuration(events, 180);
             List<Event> afterMiddayEvents = scheduleBlockOfDuration(events, 240);
 
-            // TODO - Networking Event should be seperated
+            // TODO - Networking Event should be seperated from Interface
             // if time condition is suitable, add Networking Event to end of the last presentation
             if (!afterMiddayEvents.isEmpty() && getTotalEventTimeOfBlock(afterMiddayEvents) > 180) {
                 Event event = new Event();
-                event.setSubject("Networking Event");
+                event.setSubject(NETWORKING_EVENT);
                 event.setOrganization(organization);
                 afterMiddayEvents.add(eventService.createEvent(event));
             }

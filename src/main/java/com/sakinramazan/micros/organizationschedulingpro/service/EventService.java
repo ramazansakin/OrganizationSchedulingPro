@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface EventService {
 
+    public static final String NETWORKING_EVENT = "Networking Event";
+
     // CRUD ops
     List<Event> getAllEvents();
 
