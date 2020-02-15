@@ -4,7 +4,6 @@ import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface EventService {
 
