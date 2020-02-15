@@ -1,23 +1,31 @@
 package com.sakinramazan.micros.organizationschedulingpro.model;
 
 import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Track implements Serializable {
 
     List<Event> beforeMidDayEvents;
     List<Event> afterMidDayEvents;
+
+    public Track() {
+        beforeMidDayEvents = new ArrayList<>();
+        afterMidDayEvents = new ArrayList<>();
+    }
 
     @Override
     public String toString() {

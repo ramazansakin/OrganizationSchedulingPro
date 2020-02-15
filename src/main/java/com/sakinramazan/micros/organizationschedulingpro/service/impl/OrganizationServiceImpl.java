@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
@@ -44,7 +45,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     public Organization addEventToOrganization(Integer id, Event event) {
 
         Optional<Organization> organization = organizationRepository.findById(id);
-        if(organization.isPresent()){
+        if (organization.isPresent()) {
             Event currEvent = eventService.createEvent(event);
             List<Event> events = organization.get().getEvents();
             events.add(currEvent);
@@ -97,14 +98,16 @@ public class OrganizationServiceImpl implements OrganizationService {
 
         // TODO : refactorable code block
         while (true) {
-            if (events.stream().filter(event -> event.getDuration() == durationBlock).count() > 0) {
-                Optional<Event> eventOpt = events.stream().filter(event -> event.getDuration() == durationBlock).findAny();
-                resEvents.add(eventOpt.get());
-                events.remove(eventOpt.get());
-            } else if (events.stream().filter(event -> event.getDuration() < durationBlock).count() > 0) {
-                Optional<Event> eventOpt = events.stream().filter(event -> event.getDuration() < durationBlock).findAny();
-                resEvents.add(eventOpt.get());
-                events.remove(eventOpt.get());
+            if (getIfAnyEvent(events, durationBlock) != null) {
+                Event eventOpt = getIfAnyEvent(events, durationBlock);
+                resEvents.add(eventOpt);
+                durationBlock -= eventOpt.getDuration();
+                events.remove(eventOpt);
+            } else if (getIfAnyEvent(events, durationBlock) != null) {
+                Event eventOpt = getIfAnyEvent(events, durationBlock);
+                resEvents.add(eventOpt);
+                durationBlock -= eventOpt.getDuration();
+                events.remove(eventOpt);
             } else {
                 // if there is no event that is suitable for the rest duration time, return the result list
                 break;
@@ -112,6 +115,16 @@ public class OrganizationServiceImpl implements OrganizationService {
         }
 
         return resEvents;
+    }
+
+    private Event getIfAnyEvent(List<Event> events, final int duration) {
+        if (!events.isEmpty()) {
+            if (events.stream().anyMatch(event -> event.getDuration() == duration))
+                return events.stream().filter(event -> event.getDuration() == duration).collect(Collectors.toList()).get(0);
+            else if (events.stream().anyMatch(event -> event.getDuration() < duration))
+                return events.stream().filter(event -> event.getDuration() < duration).collect(Collectors.toList()).get(0);
+        }
+        return null;
     }
 
     private int getTotalEventTimeOfBlock(List<Event> eventBlock) {
