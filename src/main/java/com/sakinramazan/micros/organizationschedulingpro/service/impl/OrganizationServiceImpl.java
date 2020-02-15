@@ -82,8 +82,15 @@ public class OrganizationServiceImpl implements OrganizationService {
         while (!events.isEmpty()) {
             Track track = new Track();
             List<Event> beforeMiddayEvents = scheduleBlockOfDuration(events, 180);
-
             List<Event> afterMiddayEvents = scheduleBlockOfDuration(events, 240);
+
+            // TODO - Networking Event should be seperated
+            // if time condition is suitable, add Networking Event to end of the last presentation
+            if (!afterMiddayEvents.isEmpty() && getTotalEventTimeOfBlock(afterMiddayEvents) > 180) {
+                Event event = new Event();
+                event.setSubject("Networking Event");
+                afterMiddayEvents.add(event);
+            }
 
             track.setBeforeMidDayEvents(beforeMiddayEvents);
             track.setAfterMidDayEvents(afterMiddayEvents);
@@ -119,6 +126,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     private Event getIfAnyEvent(List<Event> events, final int duration) {
         if (!events.isEmpty()) {
+            // TODO : refactorable code
             if (events.stream().anyMatch(event -> event.getDuration() == duration))
                 return events.stream().filter(event -> event.getDuration() == duration).collect(Collectors.toList()).get(0);
             else if (events.stream().anyMatch(event -> event.getDuration() < duration))

@@ -43,7 +43,7 @@ public class OrganizationController {
     }
 
     @PostMapping("/organizations/{id}/addevent")
-    public Organization addEvent(@PathVariable Integer id, @RequestBody Event event){
+    public Organization addEvent(@PathVariable Integer id, @Valid @RequestBody Event event) {
         return organizationService.addEventToOrganization(id, event);
     }
 
@@ -60,8 +60,7 @@ public class OrganizationController {
     }
 
     @GetMapping("/organizations/schedule/{id}")
-    public ResponseEntity<OrganizationProgram> getOrganizationProgram(
-            @PathVariable(value = "id") Integer id) {
+    public ResponseEntity<OrganizationProgram> getOrganizationProgram(@PathVariable(value = "id") Integer id) {
         Organization organization = organizationService.getOrganization(id);
         List<Track> tracks = organizationService.scheduleEvents(organization.getId());
 
