@@ -1,6 +1,6 @@
 package com.sakinramazan.micros.organizationschedulingpro.dto;
 
-import com.sakinramazan.micros.organizationschedulingpro.dao.Event;
+import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

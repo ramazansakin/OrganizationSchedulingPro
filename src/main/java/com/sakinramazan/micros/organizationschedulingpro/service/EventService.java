@@ -1,6 +1,6 @@
 package com.sakinramazan.micros.organizationschedulingpro.service;
 
-import com.sakinramazan.micros.organizationschedulingpro.dao.Event;
+import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
 
 import java.util.List;
 
