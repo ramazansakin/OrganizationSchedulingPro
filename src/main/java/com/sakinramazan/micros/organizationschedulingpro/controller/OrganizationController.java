@@ -1,6 +1,8 @@
 package com.sakinramazan.micros.organizationschedulingpro.controller;
 
 import com.sakinramazan.micros.organizationschedulingpro.entity.Organization;
+import com.sakinramazan.micros.organizationschedulingpro.model.OrganizationProgram;
+import com.sakinramazan.micros.organizationschedulingpro.model.Track;
 import com.sakinramazan.micros.organizationschedulingpro.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +45,19 @@ public class OrganizationController {
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return response;
+    }
+
+    @GetMapping("/organizations/schedule/{id}")
+    public ResponseEntity<OrganizationProgram> getOrganizationProgram(
+            @PathVariable(value = "id") Integer id) {
+        Organization organization = organizationService.getOrganization(id);
+        List<Track> tracks = organizationService.scheduleEvents(organization.getId());
+
+        OrganizationProgram program = new OrganizationProgram();
+        program.setOrganizationName(organization.getName());
+        program.setTracks(tracks);
+
+        return ResponseEntity.ok().body(program);
     }
 
 }
