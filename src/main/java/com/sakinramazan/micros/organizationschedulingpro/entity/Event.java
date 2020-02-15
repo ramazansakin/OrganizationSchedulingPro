@@ -10,7 +10,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
 @Entity
 @Table(name = "event")
 public class Event implements Serializable {
@@ -26,4 +25,9 @@ public class Event implements Serializable {
     @ManyToOne
     @JoinColumn(name = "organization_id", referencedColumnName = "id")
     private Organization organization;
+
+    @Override
+    public String toString() {
+        return subject + " " + duration + "min";
+    }
 }

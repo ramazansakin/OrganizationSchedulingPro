@@ -69,6 +69,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         while( !events.isEmpty() ){
             Track track = new Track();
             List<Event> beforeMiddayEvents = scheduleBlockOfDuration(events, 180);
+
             List<Event> afterMiddayEvents = scheduleBlockOfDuration(events, 240);
 
             track.setBeforeMidDayEvents(beforeMiddayEvents);
