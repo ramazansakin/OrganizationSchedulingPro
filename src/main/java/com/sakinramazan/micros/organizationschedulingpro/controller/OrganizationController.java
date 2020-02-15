@@ -36,6 +36,11 @@ public class OrganizationController {
         return organizationService.createOrganization(organization);
     }
 
+    @PutMapping("/organizations")
+    public Organization updateOrganization(@Valid @RequestBody Organization organization) {
+        return organizationService.updateOrganization(organization);
+    }
+
     @DeleteMapping("/organizations/{id}")
     public Map<String, Boolean> deleteOrganization(
             @PathVariable(value = "id") Integer id) {
