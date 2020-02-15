@@ -1,8 +1,8 @@
 package com.sakinramazan.micros.organizationschedulingpro.service;
 
+import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Organization;
 import com.sakinramazan.micros.organizationschedulingpro.model.Track;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -13,9 +13,11 @@ public interface OrganizationService {
 
     Organization getOrganization(Integer id);
 
-    Organization createOrganization(@RequestBody Organization organization);
+    Organization createOrganization(Organization organization);
 
-    Organization updateOrganization(@RequestBody Organization organization);
+    Organization updateOrganization(Organization organization);
+
+    Organization addEventToOrganization(Integer id, Event event);
 
     boolean deleteOrganization(Integer id);
 

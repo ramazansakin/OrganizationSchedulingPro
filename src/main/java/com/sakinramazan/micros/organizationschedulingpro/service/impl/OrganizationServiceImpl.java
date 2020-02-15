@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
@@ -42,6 +41,19 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
+    public Organization addEventToOrganization(Integer id, Event event) {
+
+        Optional<Organization> organization = organizationRepository.findById(id);
+        if(organization.isPresent()){
+            Event currEvent = eventService.createEvent(event);
+            List<Event> events = organization.get().getEvents();
+            events.add(currEvent);
+            return organizationRepository.save(organization.get());
+        }
+        return null;
+    }
+
+    @Override
     public Organization updateOrganization(Organization organization) {
         Organization upOrganization = getOrganization(organization.getId());
 
@@ -66,7 +78,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
         List<Track> possibleTracks = new ArrayList<>();
 
-        while( !events.isEmpty() ){
+        while (!events.isEmpty()) {
             Track track = new Track();
             List<Event> beforeMiddayEvents = scheduleBlockOfDuration(events, 180);
 
@@ -102,7 +114,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         return resEvents;
     }
 
-    private int getTotalEventTimeOfBlock(List<Event> eventBlock){
+    private int getTotalEventTimeOfBlock(List<Event> eventBlock) {
         return eventBlock.stream().map(Event::getDuration).mapToInt(Integer::intValue).sum();
     }
 

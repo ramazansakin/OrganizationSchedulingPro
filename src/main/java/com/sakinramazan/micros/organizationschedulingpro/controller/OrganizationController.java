@@ -1,5 +1,6 @@
 package com.sakinramazan.micros.organizationschedulingpro.controller;
 
+import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Organization;
 import com.sakinramazan.micros.organizationschedulingpro.model.OrganizationProgram;
 import com.sakinramazan.micros.organizationschedulingpro.model.Track;
@@ -40,6 +41,12 @@ public class OrganizationController {
     public Organization updateOrganization(@Valid @RequestBody Organization organization) {
         return organizationService.updateOrganization(organization);
     }
+
+    @PostMapping("/organizations/{id}/addevent")
+    public Organization addEvent(@PathVariable Integer id, @RequestBody Event event){
+        return organizationService.addEventToOrganization(id, event);
+    }
+
 
     @DeleteMapping("/organizations/{id}")
     public Map<String, Boolean> deleteOrganization(
