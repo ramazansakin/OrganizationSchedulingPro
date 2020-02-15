@@ -18,4 +18,6 @@ public interface EventService {
 
     boolean deleteEvent(Integer id);
 
+    List<Event> getEventsByOrganizationId(Integer organization_id);
+
 }

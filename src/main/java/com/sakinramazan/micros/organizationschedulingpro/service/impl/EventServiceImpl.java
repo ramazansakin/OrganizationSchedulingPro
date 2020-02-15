@@ -53,4 +53,9 @@ public class EventServiceImpl implements EventService {
         }
         return false;
     }
+
+    @Override
+    public List<Event> getEventsByOrganizationId(Integer organization_id) {
+        return eventRepository.getEventsByOrganization(organization_id);
+    }
 }
