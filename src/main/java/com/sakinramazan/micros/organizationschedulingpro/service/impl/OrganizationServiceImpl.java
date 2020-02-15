@@ -89,7 +89,8 @@ public class OrganizationServiceImpl implements OrganizationService {
             if (!afterMiddayEvents.isEmpty() && getTotalEventTimeOfBlock(afterMiddayEvents) > 180) {
                 Event event = new Event();
                 event.setSubject("Networking Event");
-                afterMiddayEvents.add(event);
+                event.setOrganization(organization);
+                afterMiddayEvents.add(eventService.createEvent(event));
             }
 
             track.setBeforeMidDayEvents(beforeMiddayEvents);
