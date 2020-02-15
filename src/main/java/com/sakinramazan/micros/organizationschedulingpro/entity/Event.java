@@ -26,7 +26,7 @@ public class Event implements Serializable {
 
     private Integer duration;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "organization_id", referencedColumnName = "id")
     private Organization organization;
 

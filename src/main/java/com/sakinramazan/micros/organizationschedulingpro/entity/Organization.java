@@ -16,7 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@ToString
 @Table(name = "organization")
 public class Organization implements Serializable {
 
@@ -29,7 +28,7 @@ public class Organization implements Serializable {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "organization")
+    @OneToMany(mappedBy = "organization", fetch = FetchType.LAZY)
     private List<Event> events;
 
 
