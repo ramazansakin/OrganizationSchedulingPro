@@ -36,6 +36,11 @@ public class EventController {
         return eventService.createEvent(event);
     }
 
+    @PutMapping("/events")
+    public Event updateEvent(@Valid @RequestBody Event event) {
+        return eventService.updateEvent(event);
+    }
+
     @DeleteMapping("/events/{id}")
     public Map<String, Boolean> deleteEvent(
             @PathVariable(value = "id") Integer id) {

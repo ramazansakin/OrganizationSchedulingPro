@@ -37,7 +37,6 @@ public class EventServiceImpl implements EventService {
         Event upEvent = eventRepository.findById(event.getId())
                 .orElseThrow(() -> new RuntimeException("User not found by id : " + event.getId()));
 
-        upEvent.setOrganization(event.getOrganization());
         upEvent.setSubject(event.getSubject());
         upEvent.setDuration(event.getDuration());
 
