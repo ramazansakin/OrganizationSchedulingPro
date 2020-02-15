@@ -1,8 +1,8 @@
 package com.sakinramazan.micros.organizationschedulingpro.service;
 
-import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
-import com.sakinramazan.micros.organizationschedulingpro.entity.Organization;
-import com.sakinramazan.micros.organizationschedulingpro.model.Track;
+import com.sakinramazan.micros.organizationschedulingpro.dao.Event;
+import com.sakinramazan.micros.organizationschedulingpro.dao.Organization;
+import com.sakinramazan.micros.organizationschedulingpro.dto.Track;
 
 import java.util.List;
 

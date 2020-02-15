@@ -1,7 +1,7 @@
 package com.sakinramazan.micros.organizationschedulingpro.controller;
 
 
-import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
+import com.sakinramazan.micros.organizationschedulingpro.dao.Event;
 import com.sakinramazan.micros.organizationschedulingpro.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

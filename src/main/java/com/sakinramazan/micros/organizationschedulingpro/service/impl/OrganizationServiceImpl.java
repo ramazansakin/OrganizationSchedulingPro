@@ -1,8 +1,8 @@
 package com.sakinramazan.micros.organizationschedulingpro.service.impl;
 
-import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
-import com.sakinramazan.micros.organizationschedulingpro.entity.Organization;
-import com.sakinramazan.micros.organizationschedulingpro.model.Track;
+import com.sakinramazan.micros.organizationschedulingpro.dao.Event;
+import com.sakinramazan.micros.organizationschedulingpro.dao.Organization;
+import com.sakinramazan.micros.organizationschedulingpro.dto.Track;
 import com.sakinramazan.micros.organizationschedulingpro.repository.OrganizationRepository;
 import com.sakinramazan.micros.organizationschedulingpro.service.EventService;
 import com.sakinramazan.micros.organizationschedulingpro.service.OrganizationService;
@@ -86,13 +86,14 @@ public class OrganizationServiceImpl implements OrganizationService {
             List<Event> beforeMiddayEvents = scheduleBlockOfDuration(events, 180);
             List<Event> afterMiddayEvents = scheduleBlockOfDuration(events, 240);
 
-            // TODO - Networking Event should be seperated from Interface
+            // TODO - Networking Event may be seperated from Interface
             // if time condition is suitable, add Networking Event to end of the last presentation
             if (!afterMiddayEvents.isEmpty() && getTotalEventTimeOfBlock(afterMiddayEvents) > 180) {
                 Event event = new Event();
                 event.setSubject(NETWORKING_EVENT);
                 event.setOrganization(organization);
-                afterMiddayEvents.add(eventService.createEvent(event));
+                // Not need to persist Networking events
+                afterMiddayEvents.add(event);
             }
 
             track.setBeforeMidDayEvents(beforeMiddayEvents);

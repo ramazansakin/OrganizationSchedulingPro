@@ -1,4 +1,4 @@
-package com.sakinramazan.micros.organizationschedulingpro.model;
+package com.sakinramazan.micros.organizationschedulingpro.dto;
 
 import lombok.*;
 

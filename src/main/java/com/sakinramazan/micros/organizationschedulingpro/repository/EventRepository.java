@@ -1,6 +1,6 @@
 package com.sakinramazan.micros.organizationschedulingpro.repository;
 
-import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
+import com.sakinramazan.micros.organizationschedulingpro.dao.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

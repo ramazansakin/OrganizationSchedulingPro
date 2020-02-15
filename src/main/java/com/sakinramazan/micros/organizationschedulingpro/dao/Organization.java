@@ -1,4 +1,4 @@
-package com.sakinramazan.micros.organizationschedulingpro.entity;
+package com.sakinramazan.micros.organizationschedulingpro.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -32,7 +32,7 @@ public class Organization implements Serializable {
     private List<Event> events;
 
 
-//    TODO
+//    TODO : may be created different type of organizations as well via enum 'organization type'
 //    private OrganizationType orgType;
 
 }

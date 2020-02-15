@@ -1,6 +1,6 @@
 package com.sakinramazan.micros.organizationschedulingpro.service.impl;
 
-import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
+import com.sakinramazan.micros.organizationschedulingpro.dao.Event;
 import com.sakinramazan.micros.organizationschedulingpro.repository.EventRepository;
 import com.sakinramazan.micros.organizationschedulingpro.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
