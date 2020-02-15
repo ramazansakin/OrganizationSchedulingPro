@@ -32,18 +32,18 @@ public class Track implements Serializable {
         StringBuilder track = new StringBuilder();
 
         Calendar c = Calendar.getInstance();
-        LocalDateTime timeAM = LocalDateTime.of(c.get(Calendar.YEAR),
+        LocalDateTime timeAM = LocalDateTime.of(
+                c.get(Calendar.YEAR),
                 c.get(Calendar.MONTH),
                 c.get(Calendar.DAY_OF_MONTH),
                 9,
                 0);
 
+        LocalDateTime lunchTime = timeAM.plusHours(3);
         LocalDateTime timePM = timeAM.plusHours(4);
-
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
 
-        for (Event event :
-                beforeMidDayEvents) {
+        for (Event event : beforeMidDayEvents) {
 
             String currTime = timeAM.format(dtf);
             track.append(currTime).append("AM").append(" ");
@@ -53,12 +53,12 @@ public class Track implements Serializable {
             timeAM.plusMinutes(event.getDuration());
         }
 
-        // TODO : hard coded parameters refactorable
-        track.append("12:00PM Lunch");
+        // adding lunch time
+        String lunchTimeStr = lunchTime.format(dtf);
+        track.append(lunchTimeStr).append("PM ").append("Lunch");
         track.append("\n");
 
-        for (Event event :
-                afterMidDayEvents) {
+        for (Event event : afterMidDayEvents) {
 
             String currTime = timePM.format(dtf);
             track.append(currTime).append("PM").append(" ");

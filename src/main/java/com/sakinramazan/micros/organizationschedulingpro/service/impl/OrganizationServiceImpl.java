@@ -106,14 +106,9 @@ public class OrganizationServiceImpl implements OrganizationService {
     private List<Event> scheduleBlockOfDuration(List<Event> events, int durationBlock) {
         List<Event> resEvents = new ArrayList<>();
 
-        // TODO : refactorable code block
+        // while keep it going till event list finishes
         while (true) {
             if (getIfAnyEvent(events, durationBlock) != null) {
-                Event eventOpt = getIfAnyEvent(events, durationBlock);
-                resEvents.add(eventOpt);
-                durationBlock -= eventOpt.getDuration();
-                events.remove(eventOpt);
-            } else if (getIfAnyEvent(events, durationBlock) != null) {
                 Event eventOpt = getIfAnyEvent(events, durationBlock);
                 resEvents.add(eventOpt);
                 durationBlock -= eventOpt.getDuration();
@@ -129,7 +124,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     private Event getIfAnyEvent(List<Event> events, final int duration) {
         if (!events.isEmpty()) {
-            // TODO : refactorable code
+            // If there is equal amout of duration bock, get it first for fitting time table
+            // or else get less value if possible
             if (events.stream().anyMatch(event -> event.getDuration() == duration))
                 return events.stream().filter(event -> event.getDuration() == duration).collect(Collectors.toList()).get(0);
             else if (events.stream().anyMatch(event -> event.getDuration() < duration))
