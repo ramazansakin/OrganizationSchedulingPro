@@ -34,7 +34,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     public Organization getOrganization(Integer id) {
         Organization organization = organizationRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Organization Not found bby id : " + id));
+                () -> new ResourceNotFoundException("Organization Not found by id : " + id));
 
         return organization;
     }

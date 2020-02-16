@@ -4,12 +4,12 @@ package com.sakinramazan.micros.organizationschedulingpro.controller;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
 import com.sakinramazan.micros.organizationschedulingpro.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -18,38 +18,34 @@ public class EventController {
     @Autowired
     private EventService eventService;
 
-
     @GetMapping("/events")
-    public List<Event> getAllEvents() {
-        return eventService.getAllEvents();
+    public ResponseEntity getAllEvents() {
+        return new ResponseEntity(eventService.getAllEvents(), HttpStatus.OK);
     }
 
     @GetMapping("/events/{id}")
-    public ResponseEntity<Event> getEventById(
-            @PathVariable(value = "id") Integer id) {
-        Event event = eventService.getEvent(id);
-        return ResponseEntity.ok().body(event);
+    public ResponseEntity getEventById(@PathVariable(value = "id") Integer id) {
+        return ResponseEntity.ok().body(eventService.getEvent(id));
     }
 
     @PostMapping("/events")
-    public Event createEvent(@Valid @RequestBody Event event) {
-        return eventService.createEvent(event);
+    public ResponseEntity createEvent(@Valid @RequestBody Event event) {
+        return new ResponseEntity(eventService.createEvent(event), HttpStatus.CREATED);
     }
 
     @PutMapping("/events")
-    public Event updateEvent(@Valid @RequestBody Event event) {
-        return eventService.updateEvent(event);
+    public ResponseEntity updateEvent(@Valid @RequestBody Event event) {
+        return new ResponseEntity(eventService.updateEvent(event), HttpStatus.OK);
     }
 
     @DeleteMapping("/events/{id}")
-    public Map<String, Boolean> deleteEvent(
-            @PathVariable(value = "id") Integer id) {
+    public ResponseEntity deleteEvent(@PathVariable(value = "id") Integer id) {
         Event event = eventService.getEvent(id);
-
         eventService.deleteEvent(event.getId());
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
-        return response;
+
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
 }
