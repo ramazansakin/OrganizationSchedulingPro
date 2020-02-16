@@ -1,8 +1,8 @@
 package com.sakinramazan.micros.organizationschedulingpro.service;
 
+import com.sakinramazan.micros.organizationschedulingpro.dto.EventDTO;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Organization;
-import com.sakinramazan.micros.organizationschedulingpro.dto.Track;
 
 import java.util.List;
 
@@ -21,6 +21,6 @@ public interface OrganizationService {
 
     boolean deleteOrganization(Integer id);
 
-    List<Track> scheduleEvents(Integer organization_id);
+    List<EventDTO> scheduleEvents(Integer organization_id);
 
 }

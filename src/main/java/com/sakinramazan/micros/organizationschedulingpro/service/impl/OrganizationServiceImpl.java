@@ -1,6 +1,7 @@
 package com.sakinramazan.micros.organizationschedulingpro.service.impl;
 
 import com.sakinramazan.micros.organizationschedulingpro.dao.OrganizationRepository;
+import com.sakinramazan.micros.organizationschedulingpro.dto.EventDTO;
 import com.sakinramazan.micros.organizationschedulingpro.dto.Track;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Organization;
@@ -10,7 +11,10 @@ import com.sakinramazan.micros.organizationschedulingpro.service.OrganizationSer
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -76,7 +80,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public List<Track> scheduleEvents(Integer organization_id) {
+    public List<EventDTO> scheduleEvents(Integer organization_id) {
 
         Organization organization = getOrganization(organization_id);
         List<Event> events = organization.getEvents();
@@ -103,7 +107,45 @@ public class OrganizationServiceImpl implements OrganizationService {
             possibleTracks.add(track);
         }
 
-        return possibleTracks;
+
+        return mapTrackListToDTOs(possibleTracks);
+    }
+
+    private List<EventDTO> mapTrackListToDTOs(List<Track> possibleTracks) {
+        List<EventDTO> respList = new ArrayList<>();
+
+        Calendar c = Calendar.getInstance();
+        LocalDateTime timeAM = LocalDateTime.of(
+                c.get(Calendar.YEAR),
+                c.get(Calendar.MONTH),
+                c.get(Calendar.DAY_OF_MONTH),
+                9,
+                0);
+
+        LocalDateTime lunchTime = timeAM.plusHours(3);
+        LocalDateTime timePM = timeAM.plusHours(4);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+
+        for (Track track : possibleTracks) {
+            for (Event event : track.getBeforeMidDayEvents()) {
+                StringBuilder presentationTime = new StringBuilder();
+                presentationTime.append(timeAM.format(dtf)).append(" AM");
+                EventDTO dto = new EventDTO(event.getSubject(), presentationTime.toString(), event.getDuration() + " minutes");
+                timeAM.plusMinutes(event.getDuration());
+                respList.add(dto);
+            }
+            EventDTO lunchEvent = new EventDTO("Lunch", "12:00 PM", "");
+            respList.add(lunchEvent);
+            for (Event event : track.getAfterMidDayEvents()) {
+                StringBuilder presentationTime = new StringBuilder();
+                presentationTime.append(timePM.format(dtf)).append(" PM");
+                EventDTO dto = new EventDTO(event.getSubject(), presentationTime.toString(), event.getDuration() + " minutes");
+                timeAM.plusMinutes(event.getDuration());
+                respList.add(dto);
+            }
+        }
+
+        return respList;
     }
 
     private List<Event> scheduleBlockOfDuration(List<Event> events, int durationBlock) {
@@ -127,7 +169,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     private Event getIfAnyEvent(List<Event> events, final int duration) {
         if (!events.isEmpty()) {
-            // If there is equal amout of duration bock, get it first for fitting time table
+            // If there is equal amout of duration block, get it first for fitting time table
             // or else get less value if possible
             if (events.stream().anyMatch(event -> event.getDuration() == duration))
                 return events.stream().filter(event -> event.getDuration() == duration).collect(Collectors.toList()).get(0);
