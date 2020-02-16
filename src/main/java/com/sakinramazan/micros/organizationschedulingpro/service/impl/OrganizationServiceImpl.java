@@ -100,6 +100,7 @@ public class OrganizationServiceImpl implements OrganizationService {
                 Event event = new Event();
                 event.setSubject(NETWORKING_EVENT);
                 event.setOrganization(organization);
+                event.setDuration(0);
                 // Not need to persist Networking events
                 afterMiddayEvents.add(event);
             }
