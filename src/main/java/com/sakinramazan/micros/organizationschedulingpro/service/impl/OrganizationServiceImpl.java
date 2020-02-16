@@ -35,7 +35,6 @@ public class OrganizationServiceImpl implements OrganizationService {
     public Organization getOrganization(Integer id) {
         Organization organization = organizationRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Organization Not found by id : " + id));
-
         return organization;
     }
 

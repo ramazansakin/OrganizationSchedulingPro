@@ -1,11 +1,12 @@
 package com.sakinramazan.micros.organizationschedulingpro.controller;
 
-import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
-import com.sakinramazan.micros.organizationschedulingpro.entity.Organization;
 import com.sakinramazan.micros.organizationschedulingpro.dto.OrganizationProgram;
 import com.sakinramazan.micros.organizationschedulingpro.dto.Track;
+import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
+import com.sakinramazan.micros.organizationschedulingpro.entity.Organization;
 import com.sakinramazan.micros.organizationschedulingpro.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +22,8 @@ public class OrganizationController {
     private OrganizationService organizationService;
 
     @GetMapping("/organizations")
-    public List<Organization> getAllOrganizations() {
-        return organizationService.getAllOrganizations();
+    public ResponseEntity getAllOrganizations() {
+        return new ResponseEntity(organizationService.getAllOrganizations(), HttpStatus.OK);
     }
 
     @GetMapping("/organizations/{id}")
@@ -33,30 +34,30 @@ public class OrganizationController {
     }
 
     @PostMapping("/organizations")
-    public Organization createOrganization(@Valid @RequestBody Organization organization) {
-        return organizationService.createOrganization(organization);
+    public ResponseEntity createOrganization(@Valid @RequestBody Organization organization) {
+        return new ResponseEntity(organizationService.createOrganization(organization), HttpStatus.CREATED);
     }
 
     @PutMapping("/organizations")
-    public Organization updateOrganization(@Valid @RequestBody Organization organization) {
-        return organizationService.updateOrganization(organization);
+    public ResponseEntity updateOrganization(@Valid @RequestBody Organization organization) {
+        return new ResponseEntity(organizationService.updateOrganization(organization), HttpStatus.OK);
     }
 
     @PostMapping("/organizations/{id}/addevent")
-    public Organization addEvent(@PathVariable Integer id, @Valid @RequestBody Event event) {
-        return organizationService.addEventToOrganization(id, event);
+    public ResponseEntity addEvent(@PathVariable Integer id, @Valid @RequestBody Event event) {
+        return new ResponseEntity(organizationService.addEventToOrganization(id, event), HttpStatus.OK);
     }
 
 
     @DeleteMapping("/organizations/{id}")
-    public Map<String, Boolean> deleteOrganization(
+    public ResponseEntity deleteOrganization(
             @PathVariable(value = "id") Integer id) {
         Organization organization = organizationService.getOrganization(id);
 
         organizationService.deleteOrganization(organization.getId());
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
-        return response;
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @GetMapping("/organizations/schedule/{id}")
