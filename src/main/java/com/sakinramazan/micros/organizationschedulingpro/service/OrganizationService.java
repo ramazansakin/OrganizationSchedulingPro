@@ -17,7 +17,7 @@ public interface OrganizationService {
 
     Organization updateOrganization(Organization organization);
 
-    Organization addEventToOrganization(Integer id, Event event);
+    Event addEventToOrganization(Integer id, Event event);
 
     boolean deleteOrganization(Integer id);
 

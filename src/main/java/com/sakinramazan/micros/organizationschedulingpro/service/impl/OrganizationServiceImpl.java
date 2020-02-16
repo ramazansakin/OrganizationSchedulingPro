@@ -1,9 +1,9 @@
 package com.sakinramazan.micros.organizationschedulingpro.service.impl;
 
+import com.sakinramazan.micros.organizationschedulingpro.dao.OrganizationRepository;
+import com.sakinramazan.micros.organizationschedulingpro.dto.Track;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Organization;
-import com.sakinramazan.micros.organizationschedulingpro.dto.Track;
-import com.sakinramazan.micros.organizationschedulingpro.dao.OrganizationRepository;
 import com.sakinramazan.micros.organizationschedulingpro.exception.ResourceNotFoundException;
 import com.sakinramazan.micros.organizationschedulingpro.service.EventService;
 import com.sakinramazan.micros.organizationschedulingpro.service.OrganizationService;
@@ -44,14 +44,16 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public Organization addEventToOrganization(Integer id, Event event) {
+    public Event addEventToOrganization(Integer id, Event event) {
 
         Optional<Organization> organization = organizationRepository.findById(id);
         if (organization.isPresent()) {
+            event.setOrganization(organization.get());
             Event currEvent = eventService.createEvent(event);
             List<Event> events = organization.get().getEvents();
             events.add(currEvent);
-            return organizationRepository.save(organization.get());
+            organizationRepository.save(organization.get());
+            return currEvent;
         }
         return null;
     }
