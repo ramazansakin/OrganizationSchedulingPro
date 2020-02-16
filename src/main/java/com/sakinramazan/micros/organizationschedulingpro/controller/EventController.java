@@ -2,10 +2,12 @@ package com.sakinramazan.micros.organizationschedulingpro.controller;
 
 
 import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
+import com.sakinramazan.micros.organizationschedulingpro.exception.InvalidRequestException;
 import com.sakinramazan.micros.organizationschedulingpro.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,12 +31,18 @@ public class EventController {
     }
 
     @PostMapping("/events")
-    public ResponseEntity createEvent(@Valid @RequestBody Event event) {
+    public ResponseEntity createEvent(@Valid @RequestBody Event event, Errors errors) {
+        if (errors.hasErrors()) {
+            throw new InvalidRequestException("Invalid request on Event body");
+        }
         return new ResponseEntity(eventService.createEvent(event), HttpStatus.CREATED);
     }
 
     @PutMapping("/events")
-    public ResponseEntity updateEvent(@Valid @RequestBody Event event) {
+    public ResponseEntity updateEvent(@Valid @RequestBody Event event, Errors errors) {
+        if (errors.hasErrors()) {
+            throw new InvalidRequestException("Invalid request on Event body");
+        }
         return new ResponseEntity(eventService.updateEvent(event), HttpStatus.OK);
     }
 
