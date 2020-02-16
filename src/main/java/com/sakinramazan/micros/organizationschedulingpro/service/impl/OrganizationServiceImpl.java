@@ -50,7 +50,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public Event addEventToOrganization(Integer id, Event event) {
+    public EventDTO addEventToOrganization(Integer id, Event event) {
 
         Optional<Organization> organization = organizationRepository.findById(id);
         if (organization.isPresent()) {
@@ -59,7 +59,9 @@ public class OrganizationServiceImpl implements OrganizationService {
             List<Event> events = organization.get().getEvents();
             events.add(currEvent);
             organizationRepository.save(organization.get());
-            return currEvent;
+            EventDTO responseDTO = new EventDTO(event.getSubject(), "", "" + event.getDuration());
+
+            return responseDTO;
         }
         return null;
     }
