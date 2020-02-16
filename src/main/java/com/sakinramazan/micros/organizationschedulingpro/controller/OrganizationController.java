@@ -1,6 +1,6 @@
 package com.sakinramazan.micros.organizationschedulingpro.controller;
 
-import com.sakinramazan.micros.organizationschedulingpro.dto.EventDTO;
+import com.sakinramazan.micros.organizationschedulingpro.dto.OrganizationProgram;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Organization;
 import com.sakinramazan.micros.organizationschedulingpro.exception.InvalidRequestException;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -73,9 +72,9 @@ public class OrganizationController {
     @GetMapping("/organizations/schedule/{id}")
     public ResponseEntity getOrganizationProgram(@PathVariable(value = "id") Integer id) {
         Organization organization = organizationService.getOrganization(id);
-        List<EventDTO> eventDTOS = organizationService.scheduleEvents(organization.getId());
+        OrganizationProgram organizationProgram = organizationService.scheduleEvents(organization.getId());
 
-        return ResponseEntity.ok().body(eventDTOS);
+        return ResponseEntity.ok().body(organizationProgram);
     }
 
 }

@@ -9,16 +9,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
 @Builder
-public class OrganizationProgram implements Serializable {
+public class TrackTableDTO implements Serializable {
 
-    private String organizationName;
-    private List<TrackTableDTO> trackTables;
+    private List<EventDTO> eventList;
 
-    public OrganizationProgram() {
-        trackTables = new ArrayList<>();
+    public TrackTableDTO() {
+        eventList = new ArrayList<>();
     }
 }

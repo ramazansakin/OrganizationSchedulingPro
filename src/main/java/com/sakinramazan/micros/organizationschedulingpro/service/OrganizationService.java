@@ -1,6 +1,7 @@
 package com.sakinramazan.micros.organizationschedulingpro.service;
 
 import com.sakinramazan.micros.organizationschedulingpro.dto.EventDTO;
+import com.sakinramazan.micros.organizationschedulingpro.dto.OrganizationProgram;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Organization;
 
@@ -21,6 +22,6 @@ public interface OrganizationService {
 
     boolean deleteOrganization(Integer id);
 
-    List<EventDTO> scheduleEvents(Integer organization_id);
+    OrganizationProgram scheduleEvents(Integer organization_id);
 
 }
