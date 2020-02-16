@@ -134,7 +134,7 @@ public class OrganizationServiceImpl implements OrganizationService {
                 StringBuilder presentationTime = new StringBuilder();
                 presentationTime.append(timeAM.format(dtf)).append(" AM");
                 EventDTO dto = new EventDTO(event.getSubject(), presentationTime.toString(), event.getDuration() + " minutes");
-                timeAM.plusMinutes(event.getDuration());
+                timeAM = timeAM.plusMinutes(event.getDuration());
                 eventDTOS.add(dto);
             }
             EventDTO lunchEvent = new EventDTO("Lunch", "12:00 PM", "");
@@ -143,7 +143,7 @@ public class OrganizationServiceImpl implements OrganizationService {
                 StringBuilder presentationTime = new StringBuilder();
                 presentationTime.append(timePM.format(dtf)).append(" PM");
                 EventDTO dto = new EventDTO(event.getSubject(), presentationTime.toString(), event.getDuration() + " minutes");
-                timeAM.plusMinutes(event.getDuration());
+                timePM = timePM.plusMinutes(event.getDuration());
                 eventDTOS.add(dto);
             }
             TrackTableDTO temp = new TrackTableDTO();
