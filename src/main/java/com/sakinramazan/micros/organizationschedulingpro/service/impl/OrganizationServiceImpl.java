@@ -4,6 +4,7 @@ import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Organization;
 import com.sakinramazan.micros.organizationschedulingpro.dto.Track;
 import com.sakinramazan.micros.organizationschedulingpro.dao.OrganizationRepository;
+import com.sakinramazan.micros.organizationschedulingpro.exception.ResourceNotFoundException;
 import com.sakinramazan.micros.organizationschedulingpro.service.EventService;
 import com.sakinramazan.micros.organizationschedulingpro.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     public Organization getOrganization(Integer id) {
         Organization organization = organizationRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Organization Not found bby id : " + id));
+                () -> new ResourceNotFoundException("Organization Not found bby id : " + id));
 
         return organization;
     }

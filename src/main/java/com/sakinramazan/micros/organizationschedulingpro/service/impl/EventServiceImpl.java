@@ -1,7 +1,8 @@
 package com.sakinramazan.micros.organizationschedulingpro.service.impl;
 
-import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
 import com.sakinramazan.micros.organizationschedulingpro.dao.EventRepository;
+import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
+import com.sakinramazan.micros.organizationschedulingpro.exception.ResourceNotFoundException;
 import com.sakinramazan.micros.organizationschedulingpro.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event getEvent(Integer id) {
         Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found by id : " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found by id : " + id));
         return event;
     }
 
@@ -35,7 +36,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event updateEvent(Event event) {
         Event upEvent = eventRepository.findById(event.getId())
-                .orElseThrow(() -> new RuntimeException("User not found by id : " + event.getId()));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found by id : " + event.getId()));
 
         upEvent.setSubject(event.getSubject());
         upEvent.setDuration(event.getDuration());
@@ -46,7 +47,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public boolean deleteEvent(Integer id) {
         Optional<Event> event = eventRepository.findById(id);
-        if(event.isPresent()) {
+        if (event.isPresent()) {
             eventRepository.delete(event.get());
             return true;
         }
