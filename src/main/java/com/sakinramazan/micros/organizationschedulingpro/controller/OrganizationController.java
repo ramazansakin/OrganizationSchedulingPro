@@ -1,7 +1,6 @@
 package com.sakinramazan.micros.organizationschedulingpro.controller;
 
-import com.sakinramazan.micros.organizationschedulingpro.dto.OrganizationProgram;
-import com.sakinramazan.micros.organizationschedulingpro.dto.Track;
+import com.sakinramazan.micros.organizationschedulingpro.dto.EventDTO;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Organization;
 import com.sakinramazan.micros.organizationschedulingpro.exception.InvalidRequestException;
@@ -72,15 +71,11 @@ public class OrganizationController {
     }
 
     @GetMapping("/organizations/schedule/{id}")
-    public ResponseEntity<OrganizationProgram> getOrganizationProgram(@PathVariable(value = "id") Integer id) {
+    public ResponseEntity getOrganizationProgram(@PathVariable(value = "id") Integer id) {
         Organization organization = organizationService.getOrganization(id);
-        List<Track> tracks = organizationService.scheduleEvents(organization.getId());
+        List<EventDTO> eventDTOS = organizationService.scheduleEvents(organization.getId());
 
-        OrganizationProgram program = new OrganizationProgram();
-        program.setOrganizationName(organization.getName());
-        program.setTracks(tracks);
-
-        return ResponseEntity.ok().body(program);
+        return ResponseEntity.ok().body(eventDTOS);
     }
 
 }
