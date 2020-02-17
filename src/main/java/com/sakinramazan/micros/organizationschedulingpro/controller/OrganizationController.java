@@ -80,7 +80,7 @@ public class OrganizationController {
     public ResponseEntity getOrganizationProgram(@PathVariable(value = "id") Integer id) {
         Organization organization = organizationService.getOrganization(id);
         OrganizationProgram organizationProgram = organizationService.scheduleEvents(organization.getId());
-        organizationProgram.setOrganizationName(organization.getName());
+//        organizationProgram.setOrganizationName(organization.getName());
 
         return ResponseEntity.ok().body(organizationProgram);
     }

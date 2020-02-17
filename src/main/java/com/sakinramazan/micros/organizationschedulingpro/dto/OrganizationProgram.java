@@ -15,8 +15,8 @@ import java.util.List;
 @Builder
 public class OrganizationProgram implements Serializable {
 
-    private String organizationName;
-    private List<TrackTableDTO> trackTables;
+//    private String organizationName;
+    private List<EventDTO> trackTables;
 
     public OrganizationProgram() {
         trackTables = new ArrayList<>();

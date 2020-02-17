@@ -4,7 +4,6 @@ import com.sakinramazan.micros.organizationschedulingpro.dao.OrganizationReposit
 import com.sakinramazan.micros.organizationschedulingpro.dto.EventDTO;
 import com.sakinramazan.micros.organizationschedulingpro.dto.OrganizationProgram;
 import com.sakinramazan.micros.organizationschedulingpro.dto.Track;
-import com.sakinramazan.micros.organizationschedulingpro.dto.TrackTableDTO;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Organization;
 import com.sakinramazan.micros.organizationschedulingpro.exception.ResourceNotFoundException;
@@ -50,8 +49,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public EventDTO addEventToOrganization(Integer id, Event event) {
-
+    public Event addEventToOrganization(Integer id, Event event) {
         Optional<Organization> organization = organizationRepository.findById(id);
         if (organization.isPresent()) {
             event.setOrganization(organization.get());
@@ -60,9 +58,7 @@ public class OrganizationServiceImpl implements OrganizationService {
             events.add(currEvent);
             organizationRepository.save(organization.get());
 
-            EventDTO responseDTO = new EventDTO(event.getSubject(), "", "" + event.getDuration());
-
-            return responseDTO;
+            return currEvent;
         }
         return null;
     }
@@ -118,8 +114,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     private OrganizationProgram mapTrackListToDTOs(List<Track> possibleTracks) {
         OrganizationProgram response = new OrganizationProgram();
-        List<TrackTableDTO> trackTableDTOS = new ArrayList<>();
-
+        List<EventDTO> eventDTOS = new ArrayList<>();
         Calendar c = Calendar.getInstance();
         LocalDateTime timeAM = LocalDateTime.of(
                 c.get(Calendar.YEAR),
@@ -131,29 +126,27 @@ public class OrganizationServiceImpl implements OrganizationService {
         LocalDateTime timePM = timeAM.plusHours(4);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
 
+        int trackNumber = 1;
         for (Track track : possibleTracks) {
-            List<EventDTO> eventDTOS = new ArrayList<>();
             for (Event event : track.getBeforeMidDayEvents()) {
                 StringBuilder presentationTime = new StringBuilder();
                 presentationTime.append(timeAM.format(dtf)).append(" AM");
-                EventDTO dto = new EventDTO(event.getSubject(), presentationTime.toString(), event.getDuration() + " minutes");
+                EventDTO dto = new EventDTO(event.getSubject(), presentationTime.toString(), event.getDuration() + " minutes", trackNumber);
                 timeAM = timeAM.plusMinutes(event.getDuration());
                 eventDTOS.add(dto);
             }
-            EventDTO lunchEvent = new EventDTO("Lunch", "12:00 PM", "");
+            EventDTO lunchEvent = new EventDTO("Lunch", "12:00 PM", "", trackNumber);
             eventDTOS.add(lunchEvent);
             for (Event event : track.getAfterMidDayEvents()) {
                 StringBuilder presentationTime = new StringBuilder();
                 presentationTime.append(timePM.format(dtf)).append(" PM");
-                EventDTO dto = new EventDTO(event.getSubject(), presentationTime.toString(), event.getDuration() + " minutes");
+                EventDTO dto = new EventDTO(event.getSubject(), presentationTime.toString(), event.getDuration() + " minutes", trackNumber);
                 timePM = timePM.plusMinutes(event.getDuration());
                 eventDTOS.add(dto);
             }
-            TrackTableDTO temp = new TrackTableDTO();
-            temp.setEventList(eventDTOS);
-            trackTableDTOS.add(temp);
+            ++trackNumber;
         }
-        response.setTrackTables(trackTableDTOS);
+        response.setTrackTables(eventDTOS);
         return response;
     }
 
