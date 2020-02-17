@@ -1,5 +1,6 @@
 package com.sakinramazan.micros.organizationschedulingpro.controller;
 
+import com.sakinramazan.micros.organizationschedulingpro.dto.EventDTO;
 import com.sakinramazan.micros.organizationschedulingpro.dto.OrganizationProgram;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Organization;
@@ -50,11 +51,16 @@ public class OrganizationController {
     }
 
     @PostMapping("/organizations/{id}/addevent")
-    public ResponseEntity addEvent(@PathVariable Integer id, @Valid @RequestBody Event event, Errors errors) {
+    public ResponseEntity addEvent(@PathVariable Integer id, @Valid @RequestBody EventDTO event, Errors errors) {
         if (errors.hasErrors()) {
             throw new InvalidRequestException("Invalid request on Event body");
         }
-        return new ResponseEntity(organizationService.addEventToOrganization(id, event), HttpStatus.OK);
+        // Mapping eventDTO to Event
+        Event requestEvent = new Event();
+        requestEvent.setOrganization(organizationService.getOrganization(id));
+        requestEvent.setSubject(event.getSubject());
+        requestEvent.setDuration(Integer.parseInt(event.getDuration()));
+        return new ResponseEntity(organizationService.addEventToOrganization(id, requestEvent), HttpStatus.OK);
     }
 
 

@@ -59,6 +59,7 @@ public class OrganizationServiceImpl implements OrganizationService {
             List<Event> events = organization.get().getEvents();
             events.add(currEvent);
             organizationRepository.save(organization.get());
+
             EventDTO responseDTO = new EventDTO(event.getSubject(), "", "" + event.getDuration());
 
             return responseDTO;
