@@ -116,18 +116,21 @@ public class OrganizationServiceImpl implements OrganizationService {
         OrganizationProgram response = new OrganizationProgram();
         List<EventDTO> eventDTOS = new ArrayList<>();
         Calendar c = Calendar.getInstance();
-        LocalDateTime timeAM = LocalDateTime.of(
-                c.get(Calendar.YEAR),
-                c.get(Calendar.MONTH),
-                c.get(Calendar.DAY_OF_MONTH),
-                9,
-                0);
-
-        LocalDateTime timePM = timeAM.plusHours(4);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
 
+        // number of possible tracks
         int trackNumber = 1;
         for (Track track : possibleTracks) {
+            // LocalDateTime initializations for each track
+            LocalDateTime timeAM = LocalDateTime.of(
+                    c.get(Calendar.YEAR),
+                    c.get(Calendar.MONTH),
+                    c.get(Calendar.DAY_OF_MONTH),
+                    9,
+                    0);
+
+            LocalDateTime timePM = timeAM.plusHours(4);
+
             for (Event event : track.getBeforeMidDayEvents()) {
                 StringBuilder presentationTime = new StringBuilder();
                 presentationTime.append(timeAM.format(dtf)).append(" AM");
