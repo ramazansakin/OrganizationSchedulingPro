@@ -5,13 +5,13 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class AppConf implements WebMvcConfigurer {
+public class CORSConfig implements WebMvcConfigurer {
 
     // Avoid CORS problems
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:8085")
-                .allowedMethods("GET", "POST");
+                .allowedMethods("GET", "POST", "");
     }
 }
