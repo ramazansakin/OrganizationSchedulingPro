@@ -24,7 +24,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event getEvent(Integer id) {
         Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found by id : " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Event not found by id : " + id));
         return event;
     }
 
@@ -36,7 +36,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event updateEvent(Event event) {
         Event upEvent = eventRepository.findById(event.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found by id : " + event.getId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Event not found by id : " + event.getId()));
 
         upEvent.setSubject(event.getSubject());
         upEvent.setDuration(event.getDuration());
