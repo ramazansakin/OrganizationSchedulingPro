@@ -11,13 +11,15 @@ services:
     ports:
       - "8085:8085"
 
-  mysql:
-    container_name: v-mysql
-    image: mysql/mysql-server:5.7
-    environment:
-      MYSQL_DATABASE: test
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_ROOT_HOST: '%'
-    ports:
-      - "3306:3306"
-    restart: always
+#  If you use MySQL as Data storage,
+#  also you need to change application.properties file configs
+#  mysql:
+#    container_name: v-mysql
+#    image: mysql/mysql-server:5.7
+#    environment:
+#      MYSQL_DATABASE: test
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_ROOT_HOST: '%'
+#    ports:
+#      - "3306:3306"
+#    restart: always
