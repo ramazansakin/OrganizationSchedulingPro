@@ -143,7 +143,10 @@ public class OrganizationServiceImpl implements OrganizationService {
             for (Event event : track.getAfterMidDayEvents()) {
                 StringBuilder presentationTime = new StringBuilder();
                 presentationTime.append(timePM.format(dtf)).append(" PM");
-                EventDTO dto = new EventDTO(event.getSubject(), presentationTime.toString(), event.getDuration() + " minutes", trackNumber);
+                EventDTO dto = new EventDTO(event.getSubject(),
+                        presentationTime.toString(),
+                        (event.getDuration() == 0 ? "" : event.getDuration() + " minutes"),
+                        trackNumber);
                 timePM = timePM.plusMinutes(event.getDuration());
                 eventDTOS.add(dto);
             }
