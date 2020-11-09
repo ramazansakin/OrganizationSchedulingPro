@@ -1,11 +1,9 @@
 version: '3'
 
 services:
-  springboot-docker-compose-app-container:
-    image: organization-scheduling-pro-app:1
-    build:
-      context: ./
-      dockerfile: Dockerfile
+  organization-scheduling-pro:
+    image: organization-scheduling-pro-app
+    build: Dockerfile
     volumes:
       - /data/organization-scheduling-pro-app
     ports:
