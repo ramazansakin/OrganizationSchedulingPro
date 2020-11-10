@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Integer> {
 
-    List<Event> getEventsByOrganization(Integer organization_id);
+    List<Event> getEventsByOrganization(Integer organizationId);
 
     Event getEventBySubject(String subject);
 

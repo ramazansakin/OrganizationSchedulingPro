@@ -1,6 +1,7 @@
 package com.sakinramazan.micros.organizationschedulingpro.service;
 
 import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
+import com.sakinramazan.micros.organizationschedulingpro.entity.EventDocument;
 
 import java.util.List;
 
@@ -19,6 +20,6 @@ public interface EventService {
 
     boolean deleteEvent(Integer id);
 
-    List<Event> getEventsByOrganizationId(Integer organizationId);
+    List<EventDocument> getEventsByOrganizationId(Integer organizationId);
 
 }
