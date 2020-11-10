@@ -23,9 +23,9 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event getEvent(Integer id) {
-        Event event = eventRepository.findById(id)
+        return eventRepository
+                .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Event not found by id : " + id));
-        return event;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> getEventsByOrganizationId(Integer organization_id) {
-        return eventRepository.getEventsByOrganization(organization_id);
+    public List<Event> getEventsByOrganizationId(Integer organizationId) {
+        return eventRepository.getEventsByOrganization(organizationId);
     }
 }
