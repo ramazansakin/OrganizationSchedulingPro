@@ -14,10 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.sakinramazan.micros.organizationschedulingpro.service.EventService.NETWORKING_EVENT;
@@ -38,9 +35,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     public Organization getOrganization(Integer id) {
-        Organization organization = organizationRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Organization Not found by id : " + id));
-        return organization;
+        return organizationRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Organization not found by id : " + id));
     }
 
     @Override
@@ -81,9 +78,12 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public OrganizationProgram scheduleEvents(Integer organization_id) {
+    public OrganizationProgram scheduleEvents(Integer organizationId) {
 
-        Organization organization = getOrganization(organization_id);
+        Organization organization = getOrganization(organizationId);
+        if (organization == null) {
+            throw new ResourceNotFoundException("Organization not found with id : " + organizationId);
+        }
         List<Event> events = organization.getEvents();
 
         List<Track> possibleTracks = new ArrayList<>();
@@ -164,7 +164,7 @@ public class OrganizationServiceImpl implements OrganizationService {
             if (getIfAnyEvent(events, durationBlock) != null) {
                 Event eventOpt = getIfAnyEvent(events, durationBlock);
                 resEvents.add(eventOpt);
-                durationBlock -= eventOpt.getDuration();
+                durationBlock -= Objects.requireNonNull(eventOpt).getDuration();
                 events.remove(eventOpt);
             } else {
                 // if there is no event that is suitable for the rest duration time, return the result list
