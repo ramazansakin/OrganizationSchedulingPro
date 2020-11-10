@@ -1,10 +1,7 @@
 package com.sakinramazan.micros.organizationschedulingpro.dto;
 
 import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -13,8 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @Builder
 public class Track implements Serializable {

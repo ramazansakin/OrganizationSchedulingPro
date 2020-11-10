@@ -5,11 +5,11 @@ import lombok.Value;
 import java.io.Serializable;
 
 @Value
-public final class EventDTO implements Serializable {
+public class EventDTO implements Serializable {
 
-    private final String subject;
-    private final String time;
-    private final String duration;
-    private final Integer trackno;
+    private String subject;
+    private String time;
+    private String duration;
+    private Integer trackno;
 
 }

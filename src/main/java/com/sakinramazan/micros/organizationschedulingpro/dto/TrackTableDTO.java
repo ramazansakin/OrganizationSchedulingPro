@@ -2,16 +2,14 @@ package com.sakinramazan.micros.organizationschedulingpro.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 @AllArgsConstructor
-@Getter
-@Setter
 @Builder
 public class TrackTableDTO implements Serializable {
 
@@ -21,3 +19,4 @@ public class TrackTableDTO implements Serializable {
         eventList = new ArrayList<>();
     }
 }
+
