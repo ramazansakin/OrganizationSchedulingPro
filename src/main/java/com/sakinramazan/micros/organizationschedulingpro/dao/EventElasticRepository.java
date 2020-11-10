@@ -9,4 +9,8 @@ public interface EventElasticRepository extends ElasticsearchCrudRepository<Even
 
     List<EventDocument> getAllByOrganization(Integer organization);
 
+    EventDocument getBySubject(String subject);
+
+    void deleteBySubject(String subject);
+
 }
