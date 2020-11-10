@@ -21,6 +21,8 @@ services:
   organization-scheduling-pro:
     image: organization-scheduling-pro-app
     build: Dockerfile
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
     volumes:
       - /data/organization-scheduling-pro-app
     ports:
