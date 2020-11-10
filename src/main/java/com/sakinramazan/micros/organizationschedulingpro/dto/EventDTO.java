@@ -10,6 +10,6 @@ public class EventDTO implements Serializable {
     private String subject;
     private String time;
     private String duration;
-    private Integer trackno;
+    private Integer trackNo;
 
 }

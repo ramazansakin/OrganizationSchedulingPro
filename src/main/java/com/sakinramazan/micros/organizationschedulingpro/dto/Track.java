@@ -15,8 +15,8 @@ import java.util.List;
 @Builder
 public class Track implements Serializable {
 
-    List<Event> beforeMidDayEvents;
-    List<Event> afterMidDayEvents;
+    private List<Event> beforeMidDayEvents;
+    private List<Event> afterMidDayEvents;
 
     public Track() {
         beforeMidDayEvents = new ArrayList<>();
