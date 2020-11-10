@@ -54,7 +54,7 @@ public class OrganizationController {
         return new ResponseEntity<>(organizationService.updateOrganization(organization), HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/addevent")
+    @PostMapping("/{id}/add_event")
     public ResponseEntity<Event> addEvent(@PathVariable Integer id, @Valid @RequestBody EventDTO event, Errors errors) {
         if (errors.hasErrors()) {
             throw new InvalidRequestException("Invalid request on Event body");
@@ -81,10 +81,7 @@ public class OrganizationController {
 
     @GetMapping("/schedule/{id}")
     public ResponseEntity<OrganizationProgram> getOrganizationProgram(@PathVariable(value = "id") Integer id) {
-        Organization organization = organizationService.getOrganization(id);
-        OrganizationProgram organizationProgram = organizationService.scheduleEvents(organization.getId());
-//        organizationProgram.setOrganizationName(organization.getName());
-
+        OrganizationProgram organizationProgram = organizationService.scheduleEvents(id);
         return ResponseEntity.ok().body(organizationProgram);
     }
 
