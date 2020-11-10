@@ -1,20 +1,23 @@
 package com.sakinramazan.micros.organizationschedulingpro.service.impl;
 
+import com.sakinramazan.micros.organizationschedulingpro.dao.EventElasticRepository;
 import com.sakinramazan.micros.organizationschedulingpro.dao.EventRepository;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
+import com.sakinramazan.micros.organizationschedulingpro.entity.EventDocument;
 import com.sakinramazan.micros.organizationschedulingpro.exception.ResourceNotFoundException;
 import com.sakinramazan.micros.organizationschedulingpro.service.EventService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class EventServiceImpl implements EventService {
 
-    @Autowired
-    private EventRepository eventRepository;
+    private final EventRepository eventRepository;
+    private final EventElasticRepository eventElasticRepository;
 
     @Override
     public List<Event> getAllEvents() {
@@ -55,7 +58,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> getEventsByOrganizationId(Integer organizationId) {
-        return eventRepository.getEventsByOrganization(organizationId);
+    public List<EventDocument> getEventsByOrganizationId(Integer organizationId) {
+        return eventElasticRepository.getAllByOrganization(organizationId);
     }
 }
