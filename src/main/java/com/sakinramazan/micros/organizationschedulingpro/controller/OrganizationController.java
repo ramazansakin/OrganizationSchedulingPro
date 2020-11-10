@@ -6,7 +6,7 @@ import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Organization;
 import com.sakinramazan.micros.organizationschedulingpro.exception.InvalidRequestException;
 import com.sakinramazan.micros.organizationschedulingpro.service.OrganizationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -14,20 +14,21 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/organizations")
+@RequiredArgsConstructor
 public class OrganizationController {
 
-    @Autowired
-    private OrganizationService organizationService;
+    private final OrganizationService organizationService;
 
     @GetMapping
-    public ResponseEntity getAllOrganizations() {
-        return new ResponseEntity(organizationService.getAllOrganizations(), HttpStatus.OK);
+    public ResponseEntity<List<Organization>> getAllOrganizations() {
+        return new ResponseEntity<>(organizationService.getAllOrganizations(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -38,19 +39,19 @@ public class OrganizationController {
     }
 
     @PostMapping
-    public ResponseEntity createOrganization(@Valid @RequestBody Organization organization, Errors errors) {
+    public ResponseEntity<Organization> createOrganization(@Valid @RequestBody Organization organization, Errors errors) {
         if (errors.hasErrors()) {
             throw new InvalidRequestException("Invalid request on Organization body");
         }
-        return new ResponseEntity(organizationService.createOrganization(organization), HttpStatus.CREATED);
+        return new ResponseEntity<>(organizationService.createOrganization(organization), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity updateOrganization(@Valid @RequestBody Organization organization, Errors errors) {
+    public ResponseEntity<Organization> updateOrganization(@Valid @RequestBody Organization organization, Errors errors) {
         if (errors.hasErrors()) {
             throw new InvalidRequestException("Invalid request on Organization body");
         }
-        return new ResponseEntity(organizationService.updateOrganization(organization), HttpStatus.OK);
+        return new ResponseEntity<>(organizationService.updateOrganization(organization), HttpStatus.OK);
     }
 
     @PostMapping("/{id}/addevent")
