@@ -21,6 +21,6 @@ public interface OrganizationService {
 
     boolean deleteOrganization(Integer id);
 
-    OrganizationProgram scheduleEvents(Integer organization_id);
+    OrganizationProgram scheduleEvents(Integer organizationId);
 
 }
