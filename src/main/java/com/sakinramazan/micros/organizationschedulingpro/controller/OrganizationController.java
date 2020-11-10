@@ -16,26 +16,28 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin(origins="*")
+
 @RestController
+@CrossOrigin(origins = "*")
+@RequestMapping("/organizations")
 public class OrganizationController {
 
     @Autowired
     private OrganizationService organizationService;
 
-    @GetMapping("/organizations")
+    @GetMapping
     public ResponseEntity getAllOrganizations() {
         return new ResponseEntity(organizationService.getAllOrganizations(), HttpStatus.OK);
     }
 
-    @GetMapping("/organizations/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Organization> getOrganizationById(
             @PathVariable(value = "id") Integer id) {
         Organization organization = organizationService.getOrganization(id);
         return ResponseEntity.ok().body(organization);
     }
 
-    @PostMapping("/organizations")
+    @PostMapping
     public ResponseEntity createOrganization(@Valid @RequestBody Organization organization, Errors errors) {
         if (errors.hasErrors()) {
             throw new InvalidRequestException("Invalid request on Organization body");
@@ -43,7 +45,7 @@ public class OrganizationController {
         return new ResponseEntity(organizationService.createOrganization(organization), HttpStatus.CREATED);
     }
 
-    @PutMapping("/organizations")
+    @PutMapping
     public ResponseEntity updateOrganization(@Valid @RequestBody Organization organization, Errors errors) {
         if (errors.hasErrors()) {
             throw new InvalidRequestException("Invalid request on Organization body");
@@ -51,8 +53,8 @@ public class OrganizationController {
         return new ResponseEntity(organizationService.updateOrganization(organization), HttpStatus.OK);
     }
 
-    @PostMapping("/organizations/{id}/addevent")
-    public ResponseEntity addEvent(@PathVariable Integer id, @Valid @RequestBody EventDTO event, Errors errors) {
+    @PostMapping("/{id}/addevent")
+    public ResponseEntity<Event> addEvent(@PathVariable Integer id, @Valid @RequestBody EventDTO event, Errors errors) {
         if (errors.hasErrors()) {
             throw new InvalidRequestException("Invalid request on Event body");
         }
@@ -61,23 +63,23 @@ public class OrganizationController {
         requestEvent.setOrganization(organizationService.getOrganization(id));
         requestEvent.setSubject(event.getSubject());
         requestEvent.setDuration(Integer.parseInt(event.getDuration()));
-        return new ResponseEntity(organizationService.addEventToOrganization(id, requestEvent), HttpStatus.OK);
+
+        return new ResponseEntity<>(organizationService.addEventToOrganization(id, requestEvent), HttpStatus.OK);
     }
 
-
-    @DeleteMapping("/organizations/{id}")
-    public ResponseEntity deleteOrganization(
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, Boolean>> deleteOrganization(
             @PathVariable(value = "id") Integer id) {
         Organization organization = organizationService.getOrganization(id);
 
         organizationService.deleteOrganization(organization.getId());
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
-        return new ResponseEntity(response, HttpStatus.OK);
+        return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/organizations/schedule/{id}")
-    public ResponseEntity getOrganizationProgram(@PathVariable(value = "id") Integer id) {
+    @GetMapping("/schedule/{id}")
+    public ResponseEntity<OrganizationProgram> getOrganizationProgram(@PathVariable(value = "id") Integer id) {
         Organization organization = organizationService.getOrganization(id);
         OrganizationProgram organizationProgram = organizationService.scheduleEvents(organization.getId());
 //        organizationProgram.setOrganizationName(organization.getName());

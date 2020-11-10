@@ -14,24 +14,25 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin(origins="*")
 @RestController
+@CrossOrigin(origins = "*")
+@RequestMapping("/events")
 public class EventController {
 
     @Autowired
     private EventService eventService;
 
-    @GetMapping("/events")
+    @GetMapping
     public ResponseEntity getAllEvents() {
         return new ResponseEntity(eventService.getAllEvents(), HttpStatus.OK);
     }
 
-    @GetMapping("/events/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity getEventById(@PathVariable(value = "id") Integer id) {
         return ResponseEntity.ok().body(eventService.getEvent(id));
     }
 
-    @PostMapping("/events")
+    @PostMapping
     public ResponseEntity createEvent(@Valid @RequestBody Event event, Errors errors) {
         if (errors.hasErrors()) {
             throw new InvalidRequestException("Invalid request on Event body");
@@ -39,7 +40,7 @@ public class EventController {
         return new ResponseEntity(eventService.createEvent(event), HttpStatus.CREATED);
     }
 
-    @PutMapping("/events")
+    @PutMapping
     public ResponseEntity updateEvent(@Valid @RequestBody Event event, Errors errors) {
         if (errors.hasErrors()) {
             throw new InvalidRequestException("Invalid request on Event body");
@@ -47,7 +48,7 @@ public class EventController {
         return new ResponseEntity(eventService.updateEvent(event), HttpStatus.OK);
     }
 
-    @DeleteMapping("/events/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity deleteEvent(@PathVariable(value = "id") Integer id) {
         Event event = eventService.getEvent(id);
         eventService.deleteEvent(event.getId());
