@@ -1,22 +1,22 @@
 version: '3'
 
 services:
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:$ELASTIC_VERSION
-    environment:
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - discovery.type=single-node
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    mem_limit: 1g
-    volumes:
-      - esdata1:/usr/share/elasticsearch/data
-    ports:
-      - "9200:9200"
-      - "9300:9300"
+  #  elasticsearch:
+  #    image: docker.elastic.co/elasticsearch/elasticsearch:$ELASTIC_VERSION
+  #    environment:
+  #      - bootstrap.memory_lock=true
+  #      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+  #      - discovery.type=single-node
+  #    ulimits:
+  #      memlock:
+  #        soft: -1
+  #        hard: -1
+  #    mem_limit: 1g
+  #    volumes:
+  #      - esdata1:/usr/share/elasticsearch/data
+  #    ports:
+  #      - "9200:9200"
+  #      - "9300:9300"
 
   zookeeper:
     image: wurstmeister/zookeeper
@@ -34,7 +34,9 @@ services:
 
   organization-scheduling-pro:
     image: organization-scheduling-pro-app
-    build: Dockerfile
+    build:
+      context: ./
+      dockerfile: Dockerfile
     environment:
       - "SPRING_PROFILES_ACTIVE=docker"
     volumes:
