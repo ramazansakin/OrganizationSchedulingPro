@@ -22,4 +22,5 @@ public interface EventService {
 
     List<EventDocument> getEventsByOrganizationId(Integer organizationId);
 
+    boolean produceEventDoc(Integer id);
 }

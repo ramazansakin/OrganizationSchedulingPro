@@ -5,8 +5,10 @@ import com.sakinramazan.micros.organizationschedulingpro.dao.EventRepository;
 import com.sakinramazan.micros.organizationschedulingpro.entity.Event;
 import com.sakinramazan.micros.organizationschedulingpro.entity.EventDocument;
 import com.sakinramazan.micros.organizationschedulingpro.exception.ResourceNotFoundException;
+import com.sakinramazan.micros.organizationschedulingpro.kafka.KafkaMessageProducer;
 import com.sakinramazan.micros.organizationschedulingpro.service.EventService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +16,13 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EventServiceImpl implements EventService {
 
     private final EventRepository eventRepository;
     private final EventElasticRepository eventElasticRepository;
     private final ModelMapper modelMapper;
+    private final KafkaMessageProducer kafkaMessageProducer;
 
     @Override
     public List<Event> getAllEvents() {
@@ -64,5 +68,18 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<EventDocument> getEventsByOrganizationId(Integer organizationId) {
         return eventElasticRepository.getAllByOrganization(organizationId);
+    }
+
+    @Override
+    public boolean produceEventDoc(Integer id) {
+        try {
+            Event event = getEvent(id);
+            EventDocument eventDoc = modelMapper.map(event, EventDocument.class);
+            kafkaMessageProducer.produceEventDocument(eventDoc);
+            return true;
+        } catch (Exception ex) {
+            log.error("Something s going wrong! [" + ex.getMessage() + "]");
+            return false;
+        }
     }
 }

@@ -59,4 +59,9 @@ public class EventController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PostMapping("/produce/{id}")
+    public boolean produceEventDoc(@PathVariable(value = "id") Integer id) {
+        return eventService.produceEventDoc(id);
+    }
+
 }
