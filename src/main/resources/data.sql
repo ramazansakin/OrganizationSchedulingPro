@@ -6,12 +6,12 @@ DROP TABLE IF EXISTS organization;
 
 CREATE TABLE organization (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name varchar(50) NOT NULL
+    name varchar(50) NOT NULL UNIQUE
 );
 
 CREATE TABLE event(
     id INT AUTO_INCREMENT PRIMARY KEY,
-    subject varchar(80) NOT NULL,
+    subject varchar(80) NOT NULL UNIQUE,
     duration INT DEFAULT 0,
     organization_id INT ,
     FOREIGN KEY (organization_id) REFERENCES organization(id)
