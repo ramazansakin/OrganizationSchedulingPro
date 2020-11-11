@@ -23,9 +23,11 @@ CREATE TABLE event(
 -- ////////////////////////////////////////////////////////////////////////////
 INSERT INTO organization( name )  VALUES ('My Software Conference');
 
-INSERT INTO organization( name )  VALUES ('Sample Organization');
+INSERT INTO organization( name )  VALUES ('Test Organization');
 
-INSERT INTO event( subject, duration, organization_id) VALUES ('Architecting Your Codebase', 60, 1),
+INSERT INTO organization( name )  VALUES ('Sample');
+
+INSERT INTO event( subject, duration, organization_id) VALUES   ('Architecting Your Codebase', 60, 1),
                                                                 ('Overdoing it in Python', 45, 1 ),
                                                                 ('Flavors of Concurrency in Java', 30, 1),
                                                                 ('Ruby Errors from Mismatched Gem Versions', 45, 1),
