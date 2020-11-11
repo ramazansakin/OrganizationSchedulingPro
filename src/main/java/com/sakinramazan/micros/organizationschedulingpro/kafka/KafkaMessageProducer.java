@@ -17,7 +17,7 @@ public class KafkaMessageProducer {
     @Value("${tpd.messages-per-request}")
     private int messagesPerRequest;
 
-    void simpleStringMesgProduce(String sampleMsg) throws InterruptedException {
+    void simpleStringMesgProduce(String sampleMsg) {
         template.send(topicName, sampleMsg);
     }
 

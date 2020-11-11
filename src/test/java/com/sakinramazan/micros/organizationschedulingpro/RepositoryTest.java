@@ -40,8 +40,7 @@ public class RepositoryTest {
         Event found = eventRepository.getEventBySubject(event.getSubject());
 
         // then test
-        assertThat(found.getSubject())
-                .isEqualTo(event.getSubject());
+        assertThat(found.getSubject()).isEqualTo(event.getSubject());
     }
 
     @Test
@@ -57,8 +56,7 @@ public class RepositoryTest {
         Organization found = organizationRepository.getOrganizationByName(organization.getName());
 
         // then test
-        assertThat(found.getName())
-                .isEqualTo(organization.getName());
+        assertThat(found.getName()).isEqualTo(organization.getName());
     }
 
 }
