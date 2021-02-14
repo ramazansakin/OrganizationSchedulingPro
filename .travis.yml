@@ -1,4 +1,5 @@
 language: java
-# use Java 8
-jdk:
-- oraclejdk8
+jdk: oraclejdk8
+install: skip
+script: 
+  - mvn clean compile verify
